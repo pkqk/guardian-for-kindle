@@ -207,6 +207,9 @@ with open(today_filename) as fp:
         paper_part = li.find('h2').find('a').text
         print "["+paper_part+"]"
 
+        if re.search('sport', paper_part, re.IGNORECASE):
+            continue
+
         for li in li.find('ul'):
 
             headline = '[No headline found]'
@@ -226,6 +229,8 @@ with open(today_filename) as fp:
                 print u"  Warning: failed to parse the link: '{0}'".format(href)
                 continue
             item_id = m.group(1)
+            if re.search('^(sport|football)/',item_id):
+                continue
             print "  "+item_id
             item_url = make_item_url(item_id)
             element_tree = url_to_element_tree(item_url)
